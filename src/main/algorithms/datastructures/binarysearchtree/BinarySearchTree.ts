@@ -13,8 +13,8 @@
 // Internal node containing node references
 // and the actual node data
 export interface BinarySearchTreeNode<T> {
-	left?: BinarySearchTreeNode<T>
-	right?: BinarySearchTreeNode<T>
+	left?: BinarySearchTreeNode<T> | null
+	right?: BinarySearchTreeNode<T> | null
 	data: T
 }
 
@@ -23,7 +23,7 @@ export class BinarySearchTree<T> {
 	private _nodeCount: number = 0
 
 	// This BST is a rooted tree so we maintain a handle on the root node
-	private _root: BinarySearchTreeNode<T> = null
+	private _root: BinarySearchTreeNode<T> | null | undefined = null
 
 	// Check if this binary tree is empty
 	public isEmpty(): boolean {
@@ -53,9 +53,9 @@ export class BinarySearchTree<T> {
 
 	// private method to recursively add a value to the binary tree
 	private recursiveAdd(
-		node: BinarySearchTreeNode<T>,
+		node: BinarySearchTreeNode<T> | null | undefined,
 		elem: T
-	): BinarySearchTreeNode<T> {
+	): BinarySearchTreeNode<T> | null | undefined {
 		// Base case: found a leaf node
 		if (node == null) {
 			const node: BinarySearchTreeNode<T> = {
@@ -89,9 +89,9 @@ export class BinarySearchTree<T> {
 
 	// Private method to recursively remove a value from the binary tree
 	private recursiveRemove(
-		node: BinarySearchTreeNode<T>,
+		node: BinarySearchTreeNode<T> | null | undefined,
 		elem: T
-	): BinarySearchTreeNode<T> {
+	): BinarySearchTreeNode<T> | null | undefined {
 		if (node == null) return null
 
 		// The < and > operators already compare strings
@@ -169,7 +169,10 @@ export class BinarySearchTree<T> {
 	}
 
 	// private recursive method to find an element in the tree
-	private recursiveContains(node: BinarySearchTreeNode<T>, elem: T): boolean {
+	private recursiveContains(
+		node: BinarySearchTreeNode<T> | null | undefined,
+		elem: T
+	): boolean {
 		// Base case: reached bottom, value not found
 		if (node == null) return false
 
@@ -192,7 +195,9 @@ export class BinarySearchTree<T> {
 	}
 
 	// Recursive helper method to compute the height of the tree
-	private recursiveHeight(node: BinarySearchTreeNode<T>): number {
+	private recursiveHeight(
+		node: BinarySearchTreeNode<T> | null | undefined
+	): number {
 		if (node == null) return 0
 		return (
 			Math.max(
@@ -205,4 +210,19 @@ export class BinarySearchTree<T> {
 	// This method returns an iterator for a given TreeTraversalOrder.
 	// The ways in which you can traverse the tree are in four different ways:
 	// preorder, inorder, postorder, and levelorder.
+	/* public *traverse(order: TreeTraversalOrder) {
+    switch (order) {
+      case PRE_ORDER:
+        return this.preOrderTraversal()
+      default:
+        return null
+
+    }
+  }
+
+  private *preOrderTraversal() {
+    const expectedNodeCount: number = this._nodeCount
+
+    const stack: {}
+  } */
 }
